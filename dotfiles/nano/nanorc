@@ -1,0 +1,13 @@
+set autoindent
+set linenumbers
+set tabsize 4
+set tabstospaces
+set zap
+set zero
+
+bind ^Z undo main
+bind ^X cut main
+bind ^C copy main
+bind ^V paste main
+
+include "~/.config/nano/c.nanorc"
