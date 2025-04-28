@@ -16,193 +16,311 @@
 
 #include QMK_KEYBOARD_H
 
-#include "shift.h"
-const custom_shift_key_t custom_shift_keys[] = {
-    {KC_COMM, KC_DOT},
-    {KC_SCLN, KC_COLN},
-    {KC_QUOT, KC_DQUO},
-    {KC_QUES, KC_EXLM},
-    {KC_MINS, KC_UNDS},
-    {KC_EQL,  KC_PLUS},
-    {KC_ASTR, KC_CIRC},
-    {KC_DLR,  KC_PERC},
-    {KC_LPRN, KC_LCBR},
-    {KC_RPRN, KC_RCBR},
-    {KC_LBRC, KC_LT  },
-    {KC_RBRC, KC_GT  },
-    {KC_SLSH, KC_BSLS},
-    {KC_PIPE, KC_AMPR},
-    {KC_TILD, KC_GRV },
-    {KC_HASH, KC_AT  }
-};
-uint8_t NUM_CUSTOM_SHIFT_KEYS = sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);
-
 enum planck_layers {
-  _NAV,
-  _NAV_UTIL,
-  _SHORTCUTS,
-  _MOD,
-  _OIEA,
-  _OIEA_UTIL,
-  _OIEA_VKXJ,
-  _NUMBERS,
-  _SYMBOLS,
-  _ADJUST
+  _TEN
 };
 
-enum keycodes
-{
-    KC_NAV = SAFE_RANGE,
-    KC_OIEA,
-    KC_UTIL
+enum keycodes {
+  KC_L0 = SAFE_RANGE,
+  KC_L1,
+  KC_L2,
+  KC_L3,
+  KC_L4,
+  KC_R0,
+  KC_R1,
+  KC_R2,
+  KC_R3,
+  KC_R4,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Navigation */
-  [_NAV] = LAYOUT_planck_grid(
+  [_TEN] = LAYOUT_planck_grid(
+    KC_R4,   KC_R3,   KC_R2,   KC_R1,   _______, _______, _______, _______, KC_L1,   KC_L2,   KC_L3,   KC_L4,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, MO(_SHORTCUTS), KC_UTIL, _______, _______, _______, _______, KC_LCTL, MO(_MOD), _______, KC_LGUI,
-    _______, _______, _______, _______, KC_LSFT, _______, _______, KC_SPC,  _______, _______, _______, MO(_ADJUST)
-  ),
-
-  /* Navigation Utilities */
-  [_NAV_UTIL] = LAYOUT_planck_grid(
-    QK_BOOT, EE_CLR,  _______, _______, _______, _______, _______, _______, LCTL(KC_V), LCTL(KC_C), LCTL(KC_X), LCTL(KC_Z),
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_NAV,  KC_OIEA, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_ENT,  KC_DEL,  KC_TAB,  KC_ESC,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-  ),
-
-  /* Shortcuts */
-  [_SHORTCUTS] = LAYOUT_planck_grid(
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, LCTL(KC_S), LCTL(KC_F), _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-  ),
-
-  /* MOD */
-  [_MOD] = LAYOUT_planck_grid(
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    KC_HOME, KC_PGUP, KC_PGDN, KC_END,  _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-  ),
-
-  /* OIEA */
-  [_OIEA] = LAYOUT_planck_grid(
-    KC_B,    KC_Y,    KC_U,    KC_P,    _______, _______, _______, _______, KC_R,    KC_D,    KC_C,    KC_W,
-    KC_O,    KC_I,    KC_E,    KC_A,    _______, _______, _______, _______, KC_H,    KC_T,    KC_N,    KC_S,
-    MO(_OIEA_VKXJ), MO(_NUMBERS), MO(_SYMBOLS), KC_UTIL, _______, _______, _______, _______, KC_L,    KC_M,    KC_F,    KC_G,
-    KC_LCTL, KC_LALT, KC_LGUI, _______, KC_LSFT, _______, _______, KC_SPC,  _______, _______, _______, MO(_ADJUST)
-  ),
-
-  /* OIEA Utilities */
-  [_OIEA_UTIL] = LAYOUT_planck_grid(
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_COMM, KC_SCLN, KC_QUOT, KC_QUES,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_NAV,  KC_OIEA, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_ENT,  KC_BSPC, KC_TAB,  KC_ESC,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-  ),
-
-  /* OIEA VKXJ */
-  [_OIEA_VKXJ] = LAYOUT_planck_grid(
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_Z,    KC_Q,    _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_V,    KC_K,    KC_X,    KC_J,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-  ),
-
-  /* Numbers */
-  [_NUMBERS] = LAYOUT_planck_grid(
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_4,    KC_5,    KC_6,    KC_7,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_0,    KC_1,    KC_2,    KC_3,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_8,    KC_9,    _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-  ),
-
-  /* Symbols */
-  [_SYMBOLS] = LAYOUT_planck_grid(
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_MINS, KC_EQL,  KC_ASTR, KC_DLR,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_SLSH, KC_PIPE, KC_TILD, KC_HASH,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-  ),
-
-  /* Adjust (Lower + Raise)
-  *                      v------------------------RGB CONTROL--------------------v
-  * ,-----------------------------------------------------------------------------------.
-  * |      | Reset|Debug | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|  Del |
-  * |------+------+------+------+------+------+------+------+------+------+------+------|
-  * |      |      |MUSmod|Aud on|Audoff|AGnorm|AGswap| NAV  | SNTH |      |      |      |
-  * |------+------+------+------+------+------+------+------+------+------+------+------|
-  * |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|      |      |      |      |      |
-  * |------+------+------+------+------+------+------+------+------+------+------+------|
-  * |      |      |      |      |      |             |      |      |      |      |      |
-  * `-----------------------------------------------------------------------------------'
-  */
-  [_ADJUST] = LAYOUT_planck_grid(
-    _______, QK_BOOT, DB_TOGG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_DEL,
-    _______, _______, MU_NEXT, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, DF(_NAV), DF(_OIEA), _______, _______, _______,
-    _______, AU_PREV, AU_NEXT, MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    QK_BOOT, EE_CLR,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, KC_L0,   _______, _______, KC_R0,   _______, _______, _______, _______
   )
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t* record)
-{
-    if (!process_custom_shift_keys(keycode, record))
-    {
-        return false;
+const uint16_t km_l[1 << 5][4] = {
+  {KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT},
+  {S(KC_LEFT), S(KC_UP), S(KC_DOWN), S(KC_RIGHT)},
+  {C(KC_LEFT), C(KC_UP), C(KC_DOWN), C(KC_RIGHT)},
+  {S(C(KC_LEFT)), S(C(KC_UP)), S(C(KC_DOWN)), S(C(KC_RIGHT))},
+  {KC_HOME, KC_PAGE_UP, KC_PAGE_DOWN, KC_END},
+  {S(KC_HOME), S(KC_PAGE_UP), S(KC_PAGE_DOWN), S(KC_END)},
+  {C(KC_PAGE_UP), C(KC_HOME), C(KC_END), C(KC_PAGE_DOWN)},
+  {S(C(KC_PAGE_UP)), S(C(KC_HOME)), S(C(KC_END)), S(C(KC_PAGE_DOWN))},
+  {G(KC_LEFT), G(KC_UP), G(KC_DOWN), G(KC_RIGHT)},
+  {G(S(KC_LEFT)), G(S(KC_UP)), G(S(KC_DOWN)), G(S(KC_RIGHT))},
+  {G(C(KC_LEFT)), G(C(KC_UP)), G(C(KC_DOWN)), G(C(KC_RIGHT))},
+  {G(S(C(KC_LEFT))), G(S(C(KC_UP))), G(S(C(KC_DOWN))), G(S(C(KC_RIGHT)))},
+  {G(KC_HOME), G(KC_PAGE_UP), G(KC_PAGE_DOWN), G(KC_END)},
+  {G(S(KC_HOME)), G(S(KC_PAGE_UP)), G(S(KC_PAGE_DOWN)), G(S(KC_END))},
+  {G(C(KC_PAGE_UP)), G(C(KC_HOME)), G(C(KC_END)), G(C(KC_PAGE_DOWN))},
+  {G(S(C(KC_PAGE_UP))), G(S(C(KC_HOME))), G(S(C(KC_END))), G(S(C(KC_PAGE_DOWN)))},
+  {C(KC_Z), C(KC_X), C(KC_C), C(KC_V)},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX}
+};
+
+const uint16_t km_r[1 << 5][4] = {
+  {KC_SPACE, KC_TAB, KC_ENTER, KC_BACKSPACE},
+  {S(KC_SPACE), S(KC_TAB), S(KC_ENTER), KC_DELETE},
+  {KC_A, KC_E, KC_I, KC_O},
+  {S(KC_A), S(KC_E), S(KC_I), S(KC_O)},
+  {KC_U, KC_Y, KC_R, KC_W},
+  {S(KC_U), S(KC_Y), S(KC_R), S(KC_W)},
+  {KC_H, KC_T, KC_N, KC_S},
+  {S(KC_H), S(KC_T), S(KC_N), S(KC_S)},
+  {KC_D, KC_L, KC_C, KC_G},
+  {S(KC_D), S(KC_L), S(KC_C), S(KC_G)},
+  {KC_M, KC_F, KC_P, KC_B},
+  {S(KC_M), S(KC_F), S(KC_P), S(KC_B)},
+  {KC_V, KC_K, KC_X, KC_J},
+  {S(KC_V), S(KC_K), S(KC_X), S(KC_J)},
+  {KC_Z, KC_Q, XXXXXXX, XXXXXXX},
+  {S(KC_Z), S(KC_Q), XXXXXXX, XXXXXXX},
+  {KC_COMMA, KC_SEMICOLON, KC_QUOTE, KC_QUESTION},
+  {KC_DOT, KC_COLON, KC_DOUBLE_QUOTE, KC_EXCLAIM},
+  {KC_LEFT_PAREN, KC_RIGHT_PAREN, KC_LEFT_BRACKET, KC_RIGHT_BRACKET},
+  {KC_LEFT_CURLY_BRACE, KC_RIGHT_CURLY_BRACE, KC_LEFT_ANGLE_BRACKET, KC_RIGHT_ANGLE_BRACKET},
+  {KC_MINUS, KC_EQUAL, KC_ASTERISK, KC_DOLLAR},
+  {KC_UNDERSCORE, KC_PLUS, KC_CIRCUMFLEX, KC_PERCENT},
+  {KC_SLASH, KC_PIPE, KC_TILDE, KC_HASH},
+  {KC_BACKSLASH, KC_AMPERSAND, KC_GRAVE, KC_AT},
+  {KC_0, KC_1, KC_2, KC_3},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {KC_4, KC_5, KC_6, KC_7},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {KC_8, KC_9, S(KC_A), S(KC_B)},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {S(KC_C), S(KC_D), S(KC_E), S(KC_F)},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX}
+};
+
+enum first {
+  FIRST_NONE,
+  FIRST_L,
+  FIRST_R
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+  static uint8_t l = 0;
+  static uint8_t r = 0;
+  static enum first first = FIRST_NONE;
+  static uint16_t registered_KC = KC_NO;
+  static uint16_t registered_KC_L1 = KC_NO;
+  static uint16_t registered_KC_L2 = KC_NO;
+  static uint16_t registered_KC_L3 = KC_NO;
+  static uint16_t registered_KC_L4 = KC_NO;
+  static uint16_t registered_KC_R1 = KC_NO;
+  static uint16_t registered_KC_R2 = KC_NO;
+  static uint16_t registered_KC_R3 = KC_NO;
+  static uint16_t registered_KC_R4 = KC_NO;
+
+  switch (keycode) {
+  case KC_L0:
+    if (record->event.pressed) {
+      l |= (1 << 0);
+      if (first == FIRST_NONE) {
+        first = FIRST_R;
+      }
+    } else {
+      l &= ~(1 << 0);
+      if (first == FIRST_R) {
+        if (r & (1 << 0)) {
+          first = FIRST_L;
+        } else {
+          first = FIRST_NONE;
+        }
+      }
     }
-
-    static enum planck_layers default_layer = _NAV;
-
-    switch (keycode)
-    {
-    case KC_NAV:
-        if (record->event.pressed)
-        {
-            set_single_default_layer(_NAV);
-            default_layer = _NAV;
-            layer_move(_NAV_UTIL);
-            return false;
+    return false;
+    case KC_L1:
+    if (record->event.pressed) {
+      l |= (1 << 1);
+      if (first == FIRST_R) {
+        if (registered_KC != KC_NO) {
+          unregister_code16(registered_KC);
+          registered_KC = KC_NO;
         }
-        break;
-
-    case KC_OIEA:
-        if (record->event.pressed)
-        {
-            set_single_default_layer(_OIEA);
-            default_layer = _OIEA;
-            layer_move(_OIEA_UTIL);
-            return false;
-        }
-        break;
-
-    case KC_UTIL:
-        if (record->event.pressed)
-        {
-            if (default_layer == _NAV)
-            {
-                layer_on(_NAV_UTIL);
-                return false;
-            }
-            else if (default_layer == _OIEA)
-            {
-                layer_on(_OIEA_UTIL);
-                return false;
-            }
-        }
-        else
-        {
-            layer_off(_NAV_UTIL);
-            layer_off(_OIEA_UTIL);
-            return false;
-        }
-        break;
+        register_code16(km_r[r][0]);
+        registered_KC_L1 = km_r[r][0];
+      }
+    } else {
+      l &= ~(1 << 1);
+      if (registered_KC_L1 != KC_NO) {
+        unregister_code16(registered_KC_L1);
+        registered_KC_L1 = KC_NO;
+      }
     }
+    return false;
+    case KC_L2:
+    if (record->event.pressed) {
+      l |= (1 << 2);
+      if (first == FIRST_R) {
+        if (registered_KC != KC_NO) {
+          unregister_code16(registered_KC);
+          registered_KC = KC_NO;
+        }
+        register_code16(km_r[r][1]);
+        registered_KC_L2 = km_r[r][1];
+      }
+    } else {
+      l &= ~(1 << 2);
+      if (registered_KC_L2 != KC_NO) {
+        unregister_code16(registered_KC_L2);
+        registered_KC_L2 = KC_NO;
+      }
+    }
+    return false;
+    case KC_L3:
+    if (record->event.pressed) {
+      l |= (1 << 3);
+      if (first == FIRST_R) {
+        if (registered_KC != KC_NO) {
+          unregister_code16(registered_KC);
+          registered_KC = KC_NO;
+        }
+        register_code16(km_r[r][2]);
+        registered_KC_L3 = km_r[r][2];
+      }
+    } else {
+      l &= ~(1 << 3);
+      if (registered_KC_L3 != KC_NO) {
+        unregister_code16(registered_KC_L3);
+        registered_KC_L3 = KC_NO;
+      }
+    }
+    return false;
+    case KC_L4:
+    if (record->event.pressed) {
+      l |= (1 << 4);
+      if (first == FIRST_R) {
+        if (registered_KC != KC_NO) {
+          unregister_code16(registered_KC);
+          registered_KC = KC_NO;
+        }
+        register_code16(km_r[r][3]);
+        registered_KC_L4 = km_r[r][3];
+      }
+    } else {
+      l &= ~(1 << 4);
+      if (registered_KC_L4 != KC_NO) {
+        unregister_code16(registered_KC_L4);
+        registered_KC_L4 = KC_NO;
+      }
+    }
+    return false;
+  case KC_R0:
+    if (record->event.pressed) {
+      r |= (1 << 0);
+      if (first == FIRST_NONE) {
+        first = FIRST_L;
+      }
+    } else {
+      r &= ~(1 << 0);
+      if (first == FIRST_L) {
+        if (l & (1 << 0)) {
+          first = FIRST_R;
+        } else {
+          first = FIRST_NONE;
+        }
+      }
+    }
+    return false;
+  case KC_R1:
+    if (record->event.pressed) {
+      r |= (1 << 1);
+      if (first == FIRST_L) {
+        if (registered_KC != KC_NO) {
+          unregister_code16(registered_KC);
+          registered_KC = KC_NO;
+        }
+        register_code16(km_l[l][3]);
+        registered_KC_R1 = km_l[l][3];
+      }
+    } else {
+      r &= ~(1 << 1);
+      if (registered_KC_R1 != KC_NO) {
+        unregister_code16(registered_KC_R1);
+        registered_KC_R1 = KC_NO;
+      }
+    }
+    return false;
+  case KC_R2:
+    if (record->event.pressed) {
+      r |= (1 << 2);
+      if (first == FIRST_L) {
+        if (registered_KC != KC_NO) {
+          unregister_code16(registered_KC);
+          registered_KC = KC_NO;
+        }
+        register_code16(km_l[l][2]);
+        registered_KC_R2 = km_l[l][2];
+      }
+    } else {
+      r &= ~(1 << 2);
+      if (registered_KC_R2 != KC_NO) {
+        unregister_code16(registered_KC_R2);
+        registered_KC_R2 = KC_NO;
+      }
+    }
+    return false;
+  case KC_R3:
+    if (record->event.pressed) {
+      r |= (1 << 3);
+      if (first == FIRST_L) {
+        if (registered_KC != KC_NO) {
+          unregister_code16(registered_KC);
+          registered_KC = KC_NO;
+        }
+        register_code16(km_l[l][1]);
+        registered_KC_R3 = km_l[l][1];
+      }
+    } else {
+      r &= ~(1 << 3);
+      if (registered_KC_R3 != KC_NO) {
+        unregister_code16(registered_KC_R3);
+        registered_KC_R3 = KC_NO;
+      }
+    }
+    return false;
+  case KC_R4:
+    if (record->event.pressed) {
+      r |= (1 << 4);
+      if (first == FIRST_L) {
+        if (registered_KC != KC_NO) {
+          unregister_code16(registered_KC);
+          registered_KC = KC_NO;
+        }
+        register_code16(km_l[l][0]);
+        registered_KC_R4 = km_l[l][0];
+      }
+    } else {
+      r &= ~(1 << 4);
+      if (registered_KC_R4 != KC_NO) {
+        unregister_code16(registered_KC_R4);
+        registered_KC_R4 = KC_NO;
+      }
+    }
+    return false;
+  }
 
-    return true;
+  return true;
 }
